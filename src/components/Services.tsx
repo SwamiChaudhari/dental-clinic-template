@@ -149,22 +149,22 @@ export default function Services() {
   }, []);
 
   return (
-    <section id="services" ref={ref} className="py-20 lg:py-28 bg-navy-50/50">
+    <section id="services" ref={ref} className="py-12 sm:py-20 lg:py-28 bg-navy-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
-          className={`text-center mb-16 ${
+          className={`text-center mb-10 sm:mb-16 ${
             inView ? "animate-fade-in-up" : "opacity-0"
           }`}
         >
           <span className="inline-block text-dental-600 font-semibold text-sm uppercase tracking-widest mb-3">
             Our Services
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4">
             Comprehensive <span className="gradient-text">Dental Care</span>
           </h2>
           <div className="section-divider mx-auto mb-6" />
-          <p className="text-navy-600 text-lg max-w-3xl mx-auto">
+          <p className="text-navy-600 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
             From routine cleanings to advanced smile transformations, we offer a
             full range of dental services to keep your smile healthy and
             beautiful.
@@ -172,20 +172,20 @@ export default function Services() {
         </div>
 
         {/* Service cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {services.map((service, i) => (
             <div
               key={service.title}
-              className={`card-hover bg-white rounded-2xl p-6 border border-navy-100/50 shadow-sm group cursor-pointer ${
+              className={`card-hover bg-white rounded-2xl p-5 sm:p-6 border border-navy-100/50 shadow-sm group cursor-pointer ${
                 inView ? "animate-fade-in-up" : "opacity-0"
               }`}
               style={{ animationDelay: `${i * 80}ms` }}
             >
               <div
-                className={`w-14 h-14 ${service.bg} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}
+                className={`w-12 h-12 sm:w-14 sm:h-14 ${service.bg} rounded-xl flex items-center justify-center mb-4 sm:mb-5 group-hover:scale-110 transition-transform`}
               >
                 <svg
-                  className={`w-7 h-7 ${service.text}`}
+                  className={`w-6 h-6 sm:w-7 sm:h-7 ${service.text}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -193,7 +193,7 @@ export default function Services() {
                   {service.icon}
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-navy-900 mb-2 group-hover:text-dental-600 transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-navy-900 mb-2 group-hover:text-dental-600 transition-colors">
                 {service.title}
               </h3>
               <p className="text-navy-600 text-sm leading-relaxed mb-4">
@@ -201,11 +201,11 @@ export default function Services() {
               </p>
               <a
                 href="#appointment"
-                className={`inline-flex items-center gap-1.5 text-sm font-semibold ${service.text} group-hover:gap-2.5 transition-all`}
+                className={`inline-flex items-center gap-1.5 text-sm font-semibold ${service.text} group-hover:gap-2.5 transition-all min-h-[44px]`}
               >
                 Learn More
                 <svg
-                  className="w-4 h-4"
+                  className="w-4 h-4 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

@@ -61,28 +61,28 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" ref={ref} className="py-20 lg:py-28 bg-white">
+    <section id="faq" ref={ref} className="py-12 sm:py-20 lg:py-28 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
-          className={`text-center mb-16 ${
+          className={`text-center mb-10 sm:mb-16 ${
             inView ? "animate-fade-in-up" : "opacity-0"
           }`}
         >
           <span className="inline-block text-dental-600 font-semibold text-sm uppercase tracking-widest mb-3">
             FAQ
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-navy-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4">
             Frequently Asked{" "}
             <span className="gradient-text">Questions</span>
           </h2>
-          <p className="text-navy-600 text-lg max-w-2xl mx-auto">
+          <p className="text-navy-600 text-base sm:text-lg max-w-2xl mx-auto">
             Everything you need to know about your visit
           </p>
         </div>
 
         {/* Accordion */}
-        <div className="space-y-4">
+        <div className="flex flex-col gap-3">
           {faqs.map((faq, i) => {
             const isOpen = activeIndex === i;
             return (
@@ -95,21 +95,19 @@ export default function FAQ() {
               >
                 <button
                   onClick={() => toggle(i)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between gap-3 px-5 py-4 sm:px-6 sm:py-5 min-h-[56px] text-left cursor-pointer group"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-base sm:text-lg font-semibold text-navy-900 group-hover:text-dental-600 transition-colors">
+                  <span className="flex-1 text-base font-semibold text-navy-900 group-hover:text-dental-600 transition-colors">
                     {faq.question}
                   </span>
                   <span
-                    className={`flex-shrink-0 w-8 h-8 rounded-full bg-dental-50 flex items-center justify-center transition-transform duration-300 ${
+                    className={`flex-shrink-0 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-dental-50 flex items-center justify-center transition-all duration-300 ${
                       isOpen ? "rotate-180 bg-dental-100" : ""
                     }`}
                   >
                     <svg
-                      className={`w-4 h-4 text-dental-600 transition-transform duration-300 ${
-                        isOpen ? "rotate-180" : ""
-                      }`}
+                      className="w-6 h-6 text-dental-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -131,9 +129,9 @@ export default function FAQ() {
                     opacity: isOpen ? 1 : 0,
                   }}
                 >
-                  <div className="px-6 pb-5">
+                  <div className="px-5 pb-5 sm:px-6">
                     <div className="h-px bg-navy-100 mb-4" />
-                    <p className="text-navy-600 leading-relaxed">
+                    <p className="text-base text-navy-600 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -145,18 +143,20 @@ export default function FAQ() {
 
         {/* CTA */}
         <div
-          className={`text-center mt-12 ${
+          className={`text-center mt-10 sm:mt-12 ${
             inView ? "animate-fade-in-up delay-500" : "opacity-0"
           }`}
         >
-          <p className="text-navy-600 text-lg mb-4">Have More Questions?</p>
+          <p className="text-navy-600 text-base sm:text-lg mb-4">
+            Have More Questions?
+          </p>
           <a
             href="#contact"
-            className="btn-primary inline-flex items-center gap-2"
+            className="btn-primary inline-flex items-center justify-center gap-2 w-full sm:w-auto min-h-[48px] px-8"
           >
             Contact Us
             <svg
-              className="w-4 h-4"
+              className="w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

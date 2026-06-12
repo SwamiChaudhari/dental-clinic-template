@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const cases = [
   {
@@ -45,6 +45,8 @@ export default function Gallery() {
   const [inView, setInView] = useState(false);
   const [activeCase, setActiveCase] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -57,8 +59,37 @@ export default function Gallery() {
     return () => observer.disconnect();
   }, []);
 
+  const goNext = useCallback(() => {
+    setActiveCase((prev) => (prev + 1) % cases.length);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setActiveCase((prev) => (prev - 1 + cases.length) % cases.length);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartY.current;
+    const absDx = Math.abs(deltaX);
+    const absDy = Math.abs(deltaY);
+
+    // Only trigger swipe if horizontal movement dominates and exceeds threshold
+    if (absDx > 50 && absDx > absDy * 1.5) {
+      if (deltaX < 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+  };
+
   return (
-    <section id="gallery" ref={ref} className="py-20 lg:py-28 bg-navy-900 relative overflow-hidden">
+    <section id="gallery" ref={ref} className="py-12 sm:py-20 lg:py-28 bg-navy-900 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-96 h-96 bg-dental-500/5 rounded-full blur-3xl" />
@@ -68,42 +99,47 @@ export default function Gallery() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
-          className={`text-center mb-16 ${
+          className={`text-center mb-10 sm:mb-14 lg:mb-16 ${
             inView ? "animate-fade-in-up" : "opacity-0"
           }`}
         >
           <span className="inline-block text-dental-400 font-semibold text-sm uppercase tracking-widest mb-3">
             Smile Transformations
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4">
             Before & After <span className="text-teal-400">Gallery</span>
           </h2>
           <div className="section-divider mx-auto mb-6" />
-          <p className="text-navy-300 text-lg max-w-3xl mx-auto">
+          <p className="text-navy-300 text-base sm:text-lg max-w-3xl mx-auto">
             See the real results our patients have achieved. Every smile tells a
             story of transformation and renewed confidence.
           </p>
         </div>
 
-        {/* Category tabs */}
+        {/* Category tabs — scrollable row on mobile */}
         <div
-          className={`flex flex-wrap justify-center gap-2 mb-12 ${
+          className={`mb-8 sm:mb-12 ${
             inView ? "animate-fade-in-up delay-200" : "opacity-0"
           }`}
         >
-          {cases.map((c, i) => (
-            <button
-              key={c.title}
-              onClick={() => setActiveCase(i)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCase === i
-                  ? "bg-gradient-to-r from-dental-500 to-teal-500 text-white shadow-lg"
-                  : "bg-white/5 text-navy-300 hover:bg-white/10 border border-white/10"
-              }`}
-            >
-              {c.category}
-            </button>
-          ))}
+          <div
+            className="flex flex-nowrap gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {cases.map((c, i) => (
+              <button
+                key={c.title}
+                onClick={() => setActiveCase(i)}
+                className={`flex-shrink-0 min-h-[40px] px-5 py-2 rounded-full text-sm font-medium transition-all snap-center whitespace-nowrap ${
+                  activeCase === i
+                    ? "bg-gradient-to-r from-dental-500 to-teal-500 text-white shadow-lg"
+                    : "bg-white/5 text-navy-300 hover:bg-white/10 border border-white/10"
+                }`}
+              >
+                {c.category}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Active case display */}
@@ -112,19 +148,24 @@ export default function Gallery() {
             inView ? "animate-fade-in-up delay-300" : "opacity-0"
           }`}
         >
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <div
+            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-4 sm:p-6 lg:p-8"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
+            {/* Before / After — stacked on mobile, side-by-side on md+ */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6">
               {/* Before */}
               <div className="relative">
                 <div className="absolute top-3 left-3 z-10 bg-navy-800/80 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
                   BEFORE
                 </div>
                 <div
-                  className={`aspect-[4/3] rounded-2xl ${cases[activeCase].beforeColor} flex items-center justify-center`}
+                  className={`w-full aspect-[16/10] md:aspect-[4/3] rounded-2xl ${cases[activeCase].beforeColor} flex items-center justify-center`}
                 >
                   <div className="text-center">
                     <svg
-                      className="w-16 h-16 mx-auto text-navy-400 mb-2"
+                      className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-navy-400 mb-2"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -149,11 +190,11 @@ export default function Gallery() {
                   AFTER
                 </div>
                 <div
-                  className={`aspect-[4/3] rounded-2xl ${cases[activeCase].afterColor} flex items-center justify-center`}
+                  className={`w-full aspect-[16/10] md:aspect-[4/3] rounded-2xl ${cases[activeCase].afterColor} flex items-center justify-center`}
                 >
                   <div className="text-center">
                     <svg
-                      className="w-16 h-16 mx-auto text-teal-600 mb-2"
+                      className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-teal-600 mb-2"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -173,41 +214,52 @@ export default function Gallery() {
               </div>
             </div>
 
+            {/* Case info — centered, responsive text */}
             <div className="text-center">
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-base sm:text-xl font-bold text-white mb-2">
                 {cases[activeCase].title}
               </h3>
-              <p className="text-navy-300 mb-3">
+              <p className="text-navy-300 text-sm sm:text-base mb-3">
                 {cases[activeCase].description}
               </p>
               <span className="inline-block bg-gradient-to-r from-dental-500 to-teal-500 text-white text-sm font-semibold px-4 py-1.5 rounded-full">
                 {cases[activeCase].improvement}
               </span>
             </div>
+
+            {/* Swipe hint on mobile */}
+            <p className="text-center text-navy-500 text-xs mt-4 md:hidden">
+              ← Swipe to browse cases →
+            </p>
           </div>
         </div>
 
-        {/* Thumbnail row */}
+        {/* Thumbnail row — horizontally scrollable with snap */}
         <div
-          className={`flex justify-center gap-3 mt-8 ${
+          className={`mt-6 sm:mt-8 ${
             inView ? "animate-fade-in-up delay-400" : "opacity-0"
           }`}
         >
-          {cases.map((c, i) => (
-            <button
-              key={c.title}
-              onClick={() => setActiveCase(i)}
-              className={`w-16 h-16 rounded-xl border-2 transition-all flex items-center justify-center ${
-                activeCase === i
-                  ? "border-dental-400 scale-110"
-                  : "border-white/10 opacity-50 hover:opacity-80"
-              } ${c.afterColor}`}
-            >
-              <span className="text-xs font-bold text-navy-700">
-                {c.title.split(" ")[0]}
-              </span>
-            </button>
-          ))}
+          <div
+            className="flex flex-nowrap gap-3 overflow-x-auto pb-2 snap-x snap-mandatory justify-start sm:justify-center"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            {cases.map((c, i) => (
+              <button
+                key={c.title}
+                onClick={() => setActiveCase(i)}
+                className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-xl border-2 transition-all flex items-center justify-center snap-center ${
+                  activeCase === i
+                    ? "border-dental-400 scale-110"
+                    : "border-white/10 opacity-50 hover:opacity-80"
+                } ${c.afterColor}`}
+              >
+                <span className="text-[10px] sm:text-xs font-bold text-navy-700">
+                  {c.title.split(" ")[0]}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

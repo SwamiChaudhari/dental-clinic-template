@@ -82,8 +82,8 @@ export default function TrustStats() {
 
   return (
     <section ref={ref} className="relative -mt-16 z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="bg-white rounded-2xl shadow-2xl shadow-navy-900/10 border border-navy-100/50 p-6 sm:p-8 lg:p-10">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4">
+      <div className="bg-white rounded-2xl shadow-2xl shadow-navy-900/10 border border-navy-100/50 p-4 sm:p-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6 lg:gap-4">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
@@ -92,9 +92,9 @@ export default function TrustStats() {
               }`}
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-dental-50 to-teal-50 rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 bg-gradient-to-br from-dental-50 to-teal-50 rounded-xl flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-dental-600"
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-dental-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

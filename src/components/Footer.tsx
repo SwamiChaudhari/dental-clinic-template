@@ -61,16 +61,16 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="bg-navy-900 text-white">
-      {/* Top row: Logo + Quick Links + Contact summary */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Top row: Grid layout — stack mobile, 2-col sm, 4-col lg */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div
-          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-12 ${
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8 lg:gap-12 ${
             inView ? "animate-fade-in-up" : "opacity-0"
           }`}
         >
-          {/* Logo + description */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
+          {/* Logo + description — centered mobile, left-aligned desktop */}
+          <div className="sm:col-span-2 lg:col-span-1 text-center sm:text-left">
+            <div className="flex items-center justify-center sm:justify-start gap-2 mb-4">
               <div className="w-10 h-10 bg-gradient-to-br from-dental-400 to-teal-400 rounded-xl flex items-center justify-center">
                 <svg
                   className="w-6 h-6 text-white"
@@ -86,11 +86,11 @@ export default function Footer() {
                 Dental
               </span>
             </div>
-            <p className="text-navy-300 text-sm leading-relaxed mb-6 max-w-xs">
+            <p className="text-navy-300 text-sm leading-relaxed mb-6 max-w-xs mx-auto sm:mx-0">
               Providing exceptional dental care with compassion and cutting-edge
               technology. Your smile is our priority.
             </p>
-            {/* HIPAA badge */}
+            {/* HIPAA badge — centered mobile */}
             <div className="inline-flex items-center gap-2 bg-navy-800 border border-navy-700 rounded-lg px-3 py-2">
               <svg
                 className="w-4 h-4 text-teal-400"
@@ -111,17 +111,17 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick links */}
+          {/* Quick links — 2-col grid on mobile with large touch targets */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300 mb-4">
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300 mb-4 text-center sm:text-left">
               Quick Links
             </h3>
-            <nav className="grid grid-cols-2 gap-2">
+            <nav className="grid grid-cols-2 gap-x-4 gap-y-1">
               {quickLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-navy-300 hover:text-dental-300 text-sm py-1 transition-colors"
+                  className="text-navy-300 hover:text-dental-300 text-sm min-h-[44px] flex items-center justify-center sm:justify-start transition-colors"
                 >
                   {link.label}
                 </a>
@@ -129,13 +129,13 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Contact summary */}
+          {/* Contact info — full width mobile, clear spacing */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300 mb-4">
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300 mb-4 text-center sm:text-left">
               Contact Info
             </h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3 justify-center sm:justify-start">
                 <svg
                   className="w-5 h-5 text-dental-400 shrink-0 mt-0.5"
                   fill="none"
@@ -155,13 +155,13 @@ export default function Footer() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span className="text-navy-300 text-sm">
+                <span className="text-navy-300 text-sm text-center sm:text-left">
                   123 Smile Avenue, Suite 200
                   <br />
                   New York, NY 10001
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 justify-center sm:justify-start">
                 <svg
                   className="w-5 h-5 text-dental-400 shrink-0"
                   fill="none"
@@ -177,7 +177,7 @@ export default function Footer() {
                 </svg>
                 <span className="text-navy-300 text-sm">(555) 123-4567</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 justify-center sm:justify-start">
                 <svg
                   className="w-5 h-5 text-dental-400 shrink-0"
                   fill="none"
@@ -195,7 +195,7 @@ export default function Footer() {
                   info@brightsmiledental.com
                 </span>
               </div>
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 justify-center sm:justify-start">
                 <svg
                   className="w-5 h-5 text-dental-400 shrink-0 mt-0.5"
                   fill="none"
@@ -209,18 +209,43 @@ export default function Footer() {
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-navy-300 text-sm">
-                  Mon–Fri: 8AM–6PM
+                <span className="text-navy-300 text-sm text-center sm:text-left">
+                  Mon&ndash;Fri: 8AM&ndash;6PM
                   <br />
-                  Sat: 9AM–2PM · Sun: Closed
+                  Sat: 9AM&ndash;2PM &middot; Sun: Closed
                 </span>
               </div>
+            </div>
+          </div>
+
+          {/* Social icons — larger touch targets, centered on mobile */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-navy-300 mb-4 text-center sm:text-left">
+              Follow Us
+            </h3>
+            <div className="flex items-center justify-center sm:justify-start gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="w-12 h-12 bg-navy-800 hover:bg-dental-500 rounded-lg flex items-center justify-center transition-colors"
+                >
+                  <svg
+                    className="w-5 h-5 text-navy-300 hover:text-white"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    {social.icon}
+                  </svg>
+                </a>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom row: Copyright + Social */}
+      {/* Bottom row: Stack on mobile (social above copyright), side-by-side on sm+ */}
       <div className="border-t border-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div
@@ -228,18 +253,19 @@ export default function Footer() {
               inView ? "animate-fade-in-up delay-200" : "opacity-0"
             }`}
           >
-            <p className="text-navy-400 text-sm text-center sm:text-left">
+            {/* Copyright — centered on mobile, smaller text */}
+            <p className="text-navy-400 text-xs sm:text-sm text-center sm:text-left order-2 sm:order-1">
               &copy; 2026 Bright Smile Dental. All rights reserved.
             </p>
 
-            {/* Social icons */}
-            <div className="flex items-center gap-3">
+            {/* Social icons in bottom row — hidden on mobile since they're in the grid above, shown on sm+ as duplicate or keep here */}
+            <div className="flex items-center gap-3 order-1 sm:order-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-9 h-9 bg-navy-800 hover:bg-dental-500 rounded-lg flex items-center justify-center transition-colors"
+                  className="w-8 h-8 bg-navy-800 hover:bg-dental-500 rounded-lg flex items-center justify-center transition-colors"
                 >
                   <svg
                     className="w-4 h-4 text-navy-300 hover:text-white"

@@ -83,6 +83,61 @@ const reasons = [
   },
 ];
 
+const gridItems = [
+  {
+    label: "Modern Equipment",
+    icon: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+      />
+    ),
+    bg: "from-dental-100 to-dental-200",
+    iconBg: "bg-dental-500",
+  },
+  {
+    label: "Expert Team",
+    icon: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+      />
+    ),
+    bg: "from-teal-100 to-teal-200",
+    iconBg: "bg-teal-500",
+  },
+  {
+    label: "Same-Day Care",
+    icon: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    ),
+    bg: "from-navy-100 to-navy-200",
+    iconBg: "bg-navy-600",
+  },
+  {
+    label: "Easy Financing",
+    icon: (
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+      />
+    ),
+    bg: "from-gold-100 to-gold-200",
+    iconBg: "bg-gold-500",
+  },
+];
+
 export default function WhyChooseUs() {
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -99,112 +154,45 @@ export default function WhyChooseUs() {
   }, []);
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-white">
+    <section ref={ref} className="py-12 sm:py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Image composition */}
+        {/* Mobile-first: stack vertically, side-by-side on lg: */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Image grid — on top for mobile, left column on lg: */}
           <div
-            className={`relative ${
+            className={`w-full ${
               inView ? "animate-slide-left delay-200" : "opacity-0"
             }`}
           >
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-dental-100 to-dental-200 flex items-center justify-center shadow-lg">
-                  <div className="text-center p-4">
-                    <div className="w-16 h-16 mx-auto bg-dental-500 rounded-full flex items-center justify-center mb-2">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {gridItems.map((item) => (
+                <div
+                  key={item.label}
+                  className={`aspect-square rounded-xl bg-gradient-to-br ${item.bg} flex items-center justify-center shadow-lg`}
+                >
+                  <div className="text-center p-2 sm:p-4">
+                    <div
+                      className={`w-12 h-12 sm:w-14 sm:h-14 mx-auto ${item.iconBg} rounded-full flex items-center justify-center mb-2`}
+                    >
                       <svg
-                        className="w-8 h-8 text-white"
+                        className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                        />
+                        {item.icon}
                       </svg>
                     </div>
-                    <p className="text-navy-700 font-semibold text-sm">
-                      Modern Equipment
+                    <p className="text-navy-700 font-semibold text-xs sm:text-sm">
+                      {item.label}
                     </p>
                   </div>
                 </div>
-                <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center shadow-lg">
-                  <div className="text-center p-4">
-                    <div className="w-16 h-16 mx-auto bg-teal-500 rounded-full flex items-center justify-center mb-2">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    </div>
-                    <p className="text-navy-700 font-semibold text-sm">
-                      Expert Team
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4 pt-8">
-                <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center shadow-lg">
-                  <div className="text-center p-4">
-                    <div className="w-16 h-16 mx-auto bg-navy-600 rounded-full flex items-center justify-center mb-2">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </div>
-                    <p className="text-navy-700 font-semibold text-sm">
-                      Same-Day Care
-                    </p>
-                  </div>
-                </div>
-                <div className="aspect-square rounded-2xl bg-gradient-to-br from-gold-100 to-gold-200 flex items-center justify-center shadow-lg">
-                  <div className="text-center p-4">
-                    <div className="w-16 h-16 mx-auto bg-gold-500 rounded-full flex items-center justify-center mb-2">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
-                        />
-                      </svg>
-                    </div>
-                    <p className="text-navy-700 font-semibold text-sm">
-                      Easy Financing
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Right - Content */}
+          {/* Text content — below image on mobile, right column on lg: */}
           <div
             className={`${
               inView ? "animate-slide-right delay-300" : "opacity-0"
@@ -213,29 +201,29 @@ export default function WhyChooseUs() {
             <span className="inline-block text-dental-600 font-semibold text-sm uppercase tracking-widest mb-3">
               Why Choose Us
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-navy-900 mb-4">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4">
               Why Patients{" "}
               <span className="gradient-text">Trust Us</span> With Their Smiles
             </h2>
             <div className="section-divider mb-6" />
-            <p className="text-navy-600 text-lg mb-10">
+            <p className="text-navy-600 text-base mb-8 sm:mb-10">
               At Bright Smile Dental, we go above and beyond to ensure every
               patient receives exceptional care in a comfortable, welcoming
               environment.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
               {reasons.map((reason, i) => (
                 <div
                   key={reason.title}
-                  className={`flex gap-4 ${
+                  className={`flex flex-col sm:flex-row gap-3 sm:gap-4 ${
                     inView ? "animate-fade-in-up" : "opacity-0"
                   }`}
                   style={{ animationDelay: `${400 + i * 100}ms` }}
                 >
-                  <div className="w-12 h-12 flex-shrink-0 bg-gradient-to-br from-dental-50 to-teal-50 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 bg-gradient-to-br from-dental-50 to-teal-50 rounded-xl flex items-center justify-center">
                     <svg
-                      className="w-6 h-6 text-dental-600"
+                      className="w-5 h-5 sm:w-6 sm:h-6 text-dental-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

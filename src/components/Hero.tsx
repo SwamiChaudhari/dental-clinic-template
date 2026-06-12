@@ -21,13 +21,13 @@ export default function Hero() {
     <section
       id="hero"
       ref={ref}
-      className="relative min-h-screen flex items-center hero-gradient overflow-hidden"
+      className="relative hero-gradient overflow-hidden pt-24 pb-16 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-28"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-dental-500/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-dental-600/3 rounded-full blur-3xl" />
+        <div className="absolute -top-20 -right-20 w-60 h-60 sm:-top-40 sm:-right-40 sm:w-96 sm:h-96 bg-dental-500/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-60 h-60 sm:-bottom-40 sm:-left-40 sm:w-96 sm:h-96 bg-teal-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] bg-dental-600/3 rounded-full blur-3xl" />
         {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
@@ -38,24 +38,71 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left content */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile-only: compact centered illustration at top */}
+        <div
+          className={`flex lg:hidden justify-center mb-8 ${
+            inView ? "animate-scale-in" : "opacity-0"
+          }`}
+        >
+          <div className="relative w-36 h-36 sm:w-44 sm:h-44">
+            <div className="absolute inset-0 bg-gradient-to-br from-dental-500/20 to-teal-500/20 rounded-full blur-xl" />
+            <div className="relative w-full h-full rounded-full bg-gradient-to-br from-dental-400 to-teal-400 flex items-center justify-center shadow-lg shadow-dental-500/20">
+              <svg
+                className="w-16 h-16 sm:w-20 sm:h-20 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+            {/* Mini floating badges on mobile */}
+            <div className="absolute -top-1 -right-1 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center animate-float">
+              <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
             <div
-              className={`inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-4 py-1.5 mb-6 ${
+              className="absolute -bottom-1 -left-1 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center animate-float"
+              style={{ animationDelay: "1.5s" }}
+            >
+              <svg className="w-5 h-5 text-dental-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Content: stacked on mobile, grid on lg */}
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left content — centered on mobile */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            {/* Badge — smaller on mobile */}
+            <div
+              className={`inline-flex items-center gap-1.5 sm:gap-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1 sm:px-4 sm:py-1.5 mb-4 sm:mb-6 ${
                 inView ? "animate-fade-in-up" : "opacity-0"
               }`}
             >
-              <span className="w-2 h-2 bg-teal-400 rounded-full animate-pulse" />
-              <span className="text-sm text-navy-200 font-medium">
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-teal-400 rounded-full animate-pulse" />
+              <span className="text-xs sm:text-sm text-navy-200 font-medium">
                 #1 Rated Dental Clinic in the City
               </span>
             </div>
 
+            {/* Heading — mobile-first sizing */}
             <h1
-              className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-6 ${
+              className={`text-3xl sm:text-4xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6 ${
                 inView ? "animate-fade-in-up delay-100" : "opacity-0"
               }`}
             >
@@ -66,8 +113,9 @@ export default function Hero() {
               With Expert Care
             </h1>
 
+            {/* Subheadline */}
             <p
-              className={`text-lg sm:text-xl text-navy-200 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed ${
+              className={`text-base sm:text-lg lg:text-xl text-navy-200 max-w-xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed ${
                 inView ? "animate-fade-in-up delay-200" : "opacity-0"
               }`}
             >
@@ -76,15 +124,15 @@ export default function Hero() {
               personalized treatment plans for the whole family.
             </p>
 
-            {/* CTAs */}
+            {/* CTAs — full-width stacked on mobile, side-by-side on sm+ */}
             <div
-              className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10 ${
+              className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-10 ${
                 inView ? "animate-fade-in-up delay-300" : "opacity-0"
               }`}
             >
               <a
                 href="#appointment"
-                className="btn-primary text-white px-8 py-4 rounded-full text-base font-semibold shadow-xl shadow-dental-500/20 flex items-center justify-center gap-2"
+                className="btn-primary w-full sm:w-auto text-white px-8 py-4 rounded-full text-base font-semibold shadow-xl shadow-dental-500/20 flex items-center justify-center gap-2 min-h-[52px]"
               >
                 <svg
                   className="w-5 h-5"
@@ -103,7 +151,7 @@ export default function Hero() {
               </a>
               <a
                 href="tel:+155****4567"
-                className="btn-gold text-navy-900 px-8 py-4 rounded-full text-base font-semibold shadow-xl flex items-center justify-center gap-2"
+                className="btn-gold w-full sm:w-auto text-navy-900 px-8 py-4 rounded-full text-base font-semibold shadow-xl flex items-center justify-center gap-2 min-h-[52px]"
               >
                 <svg
                   className="w-5 h-5"
@@ -122,9 +170,9 @@ export default function Hero() {
               </a>
             </div>
 
-            {/* Trust badges row */}
+            {/* Trust badges */}
             <div
-              className={`flex flex-wrap items-center gap-6 justify-center lg:justify-start ${
+              className={`flex flex-col sm:flex-row flex-wrap items-center gap-4 sm:gap-6 justify-center lg:justify-start ${
                 inView ? "animate-fade-in-up delay-400" : "opacity-0"
               }`}
             >
@@ -134,14 +182,14 @@ export default function Hero() {
                     (bg, i) => (
                       <div
                         key={i}
-                        className={`w-8 h-8 ${bg} rounded-full border-2 border-navy-900 flex items-center justify-center text-white text-xs font-bold`}
+                        className={`w-7 h-7 sm:w-8 sm:h-8 ${bg} rounded-full border-2 border-navy-900 flex items-center justify-center text-white text-xs font-bold`}
                       >
                         {["J", "S", "M", "K"][i]}
                       </div>
                     )
                   )}
                 </div>
-                <div className="text-sm text-navy-300">
+                <div className="text-xs sm:text-sm text-navy-300">
                   <span className="text-white font-semibold">2,500+</span>{" "}
                   Happy Patients
                 </div>
@@ -159,14 +207,14 @@ export default function Hero() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-navy-300 font-medium">
+                <span className="text-xs sm:text-sm text-navy-300 font-medium">
                   4.9/5 Rating
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Right - Image composition */}
+          {/* Right — Image composition (desktop only) */}
           <div
             className={`relative hidden lg:block ${
               inView ? "animate-slide-right delay-300" : "opacity-0"
@@ -272,7 +320,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in delay-800">
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in delay-800">
           <span className="text-xs text-navy-400 uppercase tracking-widest">
             Scroll
           </span>
